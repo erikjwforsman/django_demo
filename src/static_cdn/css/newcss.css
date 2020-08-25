@@ -1,0 +1,69 @@
+/*Sivun asettelu*/
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+/*Main gridiksi*/
+.main_wrapper{
+  height: 100vh;
+  display: flex;
+
+  flex-direction: column;
+}
+
+/*Header ja sen aliosat*/
+.header {
+  background-color: #026670;
+  color: #9FEDD7;
+  height: 30%;
+}
+  /*Ei aliosia???*/
+
+
+
+/*Content ja sen aliosat*/
+.content {
+  /padding: 0;
+  margin: 0;
+  /*background-color: #EDEAE5;*/
+  color: black;
+  flex: 1;
+  font-size: calc(10px + .5vw);
+  margin-bottom: 0;
+}
+  /*Content kakkostaso*/
+.content_wrapper{
+  display: grid;
+  grid-template-columns: 75% 25%;
+}
+    /*Content kolmostaso VASEN*/
+
+      /*Tähän jako ylhäältä alas 4 osaan*/
+
+      /*Content nelostaso Navbar*/
+
+      /*Content nelostaso Tiedot*/
+
+      /*Content nelostaso Filter*/
+
+      /*Content nelostaso Sisältö*/
+        /*Sisältö vasen*/
+
+        /*Sisältö oikea*/
+
+
+    /*Content kolmostaso OIKEA*/
+      /*Ei lisättävää???*/
+
+/*Footer*/
+.footer {
+  background-color: #FCE181;
+  color: #EDEAE5;
+  height: 10%;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+}

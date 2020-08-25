@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block profile_information %}
+
+  {% if user.is_authenticated %}
+    <h1>Tervetuloa takaisin {{user.username}}</h1>
+    <h3>Valitse etsimäsi kategoria</h3>
+
+  {% else %}
+    <h1>Tervetuloa sivustolle!</h1>
+    <h3>Voit rekisteröityä tai käyttää valmista profiilia "Testaaja" pw:"Projekti20"</h3>
+    <h3>Rekistöröidyttyäsi voi lisätä omia reseptejäsi.</h3>
+
+  {% endif %}
+{% endblock %}
+
+{% block content%}
+{%load static%}
+<h1 class="middle" style="margin-bottom:2vh">Kategoriat</h1>
+
+
+
+<div class="category">
+  <a class="middle" href="{% url 'recipe:recipes' dish='ALKUPALA'%}">
+    <div class="category_img">
+      <img class="category_img middle" src="{% static 'images/alku.jpeg' %}" alt="Alkupalat">
+      <h2 class="category_text">Alkupalat</h2>
+    </div>
+  </a>
+  <a class="middle" href="{% url 'recipe:recipes' dish='PÄÄRUOKA' %}">
+    <div class="category_img middle">
+      <img class="category_img middle" src="{% static 'images/pää.jpeg' %}" alt="Pääruuat">
+      <h2 class="category_text">Pääruuat</h2>
+    </div>
+  </a>
+  <a class="middle" href="{% url 'recipe:recipes' dish='JÄLKIRUOKA'%}">
+    <div class="category_img">
+      <img class="category_img middle" src="{% static 'images/jälki.jpeg' %}" alt="Jälkiruuat">
+      <h2 class="category_text">Jälkiruuat</h2>
+    </div>
+  </a>
+  <a class="middle" href="{% url 'recipe:recipes' dish='JUOMAT'%}">
+    <div class="category_img">
+      <img class="category_img" src="{% static 'images/juoma.jpeg' %}" alt="Juomat">
+      <h2 class="category_text">Juomat</h2>
+    </div>
+  </a>
+</div>
+
+
+
+
+
+
+
+{% endblock %}
+
+{% block feed %}
+{%if user.is_authenticated%}
+
+  <h3>Uusimmat kommentit</h3>
+  {% for kommentti in kommentti_lista%}
+
+    <a href="{% url 'recipe:single' slug=kommentti.recipe_commented.slug %}">
+      <div id="cc">
+      <h4>{{kommentti.recipe_commented}}</h4>
+      <h5>{{kommentti.text|truncatewords:25}}</h5>
+      <small>{{kommentti.author}}: {{kommentti.create_date}}</small>
+      </div>
+    </a>
+
+  {% endfor %}
+{%else%}
+  <h2 style="text-align:left; padding-left: 5%; padding-top:60%;">Rekisteröidy</h2>
+  <form method="post" style="text-align: right; padding-right: 5px">
+    {% csrf_token %}
+    {% for field in registration_form %}
+      <p>
+        {{field.label_tag}}
+        {{field}}
+
+        {% for error in field.errors%}
+          <small>{{error}}</small>
+        {% endfor %}
+      </p>
+    {% endfor %}
+    <button type="submit">Rekisteröidy</button>
+
+  </form>
+{% endif %}
+{% endblock %}

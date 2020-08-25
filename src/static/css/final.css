@@ -1,0 +1,256 @@
+.header {
+  background-color: #026670;
+  color: #9FEDD7;
+  padding-bottom: 5px;
+    height: 95px;
+}
+
+.header_profile{
+  width: 100%;
+  height: auto;
+  display: flex;
+
+}
+
+.hleft{
+  width: 25%;
+  margin-left: 1%;
+}
+.hright{
+  width: 75%;
+  text-align: right;
+  margin-right: 1%;
+}
+
+.korjaus{
+  padding-top: 25px;
+}
+
+
+/*Uusi pitää jäädä*/
+.content-wrap {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+}
+
+
+.content { /*Oikein*/
+    background-color: #EDEAE5;
+    flex: 1;
+    box-sizing: border-box;
+    height: auto;
+}
+
+.content_navbar{
+  width: 100%;
+  height: 50px;
+  color: #026670;
+  background-color: #9FEDD7;
+  padding-right: 14px;
+}
+
+.content_profile{
+  width: 100%;
+  height: auto;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  background-color: #EDEAE5;
+  display: flex;
+
+}
+
+.content_card{
+  width: 98%;
+  height: auto;
+  background-color: white;
+  border-radius: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  margin: 5px;
+  padding: 10px;
+  display: flex;
+}
+.content_card:hover{
+  opacity: 0.6;
+}
+
+.content_filter{
+  width: 99%;
+  height: auto;
+  border-radius: 25px;
+  background-color: white;
+  border: 1px solid black;
+    margin-left: auto;
+  margin-right: auto;
+  padding-left: 10px;
+  display: flex;
+}
+.filter_text{
+  margin-top: 5px;
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+.solid_black{
+  border: 1px, solid, black;
+}
+
+.left{
+  color: blue;
+
+}
+
+.right{
+  color: black;
+  margin: 0px 0px 0px 0px;
+  padding-left: 50px;
+  background-color: #F0F0F0;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  width: 100%;
+}
+
+.right_t{
+  color: black;
+  margin: 10px 30px 0px 10px;
+}
+
+.info_pic{
+
+}
+.info_text{
+
+}
+.card_pic{
+
+}
+
+.card_text{
+
+}
+
+
+.info {
+
+    height: auto;
+    width: 25vw;
+    background-color: #FEF9C7;
+    color: #026670;
+}
+
+.footer {
+  background-color: #FCE181;
+  color: #026670;
+  left: 0;
+  width: 100%;
+  text-align: center;
+    height: 75px;
+}
+
+.profpic{
+  border-radius: 50%;
+  margin-left: 5px;
+}
+
+.imag {
+  border: 1px solid #ddd;
+  background-color: #F0F0F0;
+  border-radius: 4px;
+  padding: 5px;
+  width: 500px;
+  height: auto;
+  margin-left: 5px;
+  margin-bottom: 10px;
+}
+
+.category{
+  display: flex;
+
+}
+.category_img{
+  width: 18vw;
+  height: auto;
+  margin-left: 1px;
+  margin-right: 1px;
+  margin-bottom: 0px;
+
+
+}
+.category_img:hover{
+  opacity: 0.5;
+
+
+}
+.category_text{
+  color:black;
+  margin-bottom: 5vh;
+
+
+}
+
+.flexu{
+  display:flex;
+}
+
+.food_wrapper{
+  height: auto;
+  width: 100%;
+  display: flex;
+}
+.fw_left{
+
+}
+.fw_right{
+  margin-top: -10px;
+  margin-left: 15px;
+}
+
+.middle{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+
+#d_green{
+  color: #026670;
+}
+
+#lisaa_resp{
+  height: 48px;
+  width: 98%;
+  background-color: #FCE181;
+  margin-top: 1px;
+  margin-bottom: 1px;
+  margin-left: 1%;
+  color: black;
+  border-radius: 25px;
+}
+#lisaa_resp:hover{
+  opacity: 0.6;
+}
+
+#image_food_page{
+  width=500px;
+  height=500px;
+}
+
+#cc_text{
+    color:black;
+}
+#cc{
+  width: 95%;
+  border-radius: 20px;
+  color: #026670;
+  background-color: #9FEDD7;
+  border: 1px, solid, black;
+  margin: 2px;
+  padding-left: 10px;
+}
+
+a:hover {
+    text-decoration: none;
+}

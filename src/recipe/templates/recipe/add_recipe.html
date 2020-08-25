@@ -1,0 +1,31 @@
+{% extends "base.html"%}
+
+<!--Tämä on kopioitava pohjamalli. ÄLÄ TÄYDENNÄ TÄHÄN-->
+
+<!-- Tähän sivukohtainen profiilin tiedot/kirjautuminen-->
+{% block profile_information %}
+{% endblock %}
+
+<!-- Filtterin paikka -->
+{% block filter %}
+{% endblock %}
+
+<!-- Tähän sivukohtainen sisältö (tervetuloteksti, reseptit jne.)-->
+<!-- Muista käyttää tarvittaessa vasen oikein jaottelua -->
+{% block content%}
+  <h1>Tänne lisätään resepti</h1>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% for field in form %}
+    <p>
+      {{ field.label_tag }}
+      {{ field }}
+    </p>
+    {% endfor %}
+
+    <button type="submit">Tallenna</button>
+  </form>
+{% endblock %}
+<!-- Sivun oikean puolen fiidi/rekisteröityminen -->
+{% block feed %}
+{% endblock %}

@@ -1,0 +1,73 @@
+{% extends "base.html"%}
+
+<!-- Tähän sivukohtainen profiilin tiedot/kirjautuminen-->
+{% block profile_information %}
+{% if request.user == user%}
+<h3>Tilitiedot <a href="{% url 'account:update' %}"><button>Muuta</button></a></h3>
+{% else %}
+<h3>Tilitiedot</h3>
+{% endif %}
+<h4>Käyttäjä: {{user.username}}</h4>
+{% if request.user == user%}
+<h4>Sähköposti: {{user.email}}</h4>
+{%endif%}
+<h4>Motto: {{user.motto}}</h4>
+{% endblock %}
+
+<!-- Filtterin paikka -->
+{% block filter %}
+<div class="content_filter">
+  <div class="filter_text">
+    <form method="get" class="filter_text">
+      {{myFilter.form}}
+      <button type="submit" name="button">Hae</button>
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+<!-- Tähän sivukohtainen sisältö (tervetuloteksti, reseptit jne.)-->
+<!-- Muista käyttää tarvittaessa vasen oikein jaottelua -->
+{% block content%}
+
+
+
+{% for resepti in resepti_lista %}
+<a href="{% url 'recipe:single' slug=resepti.slug %}">
+
+  <div class="content_card">
+    <div class="left" >
+      <img src="{{resepti.image.url}}" alt="Kuva puuttuu" style="border-top-left-radius: 20px; border-bottom-left-radius: 20px;" height="200" width="200">
+    </div>
+    <div class="right">
+      <h2>{{resepti.title}}</h2>
+      <h3>{{resepti.dish}}</h3>
+      <h3>Keittoaika: {{resepti.cooking_time}} minuuttia</h3>
+      <h3>Ainesosat: {{resepti.ingredients}}</h3>
+    </div>
+
+  </div>
+
+</a>
+{% endfor %}
+{% endblock %}
+
+
+
+<!-- Sivun oikean puolen fiidi/rekisteröityminen -->
+{% block feed %}
+{%if user.is_authenticated%}
+{% for kommentti in kommentti_lista%}
+
+  <a href="{% url 'recipe:single' slug=kommentti.recipe_commented.slug %}">
+    <div id="cc">
+    <h4>{{kommentti.recipe_commented}}</h4>
+    <h5>{{kommentti.text|truncatewords:25}}</h5>
+    <small>{{kommentti.author}}: {{kommentti.create_date}}</small>
+    </div>
+  </a>
+
+{% endfor %}
+{% endif %}
+
+{% endblock %}

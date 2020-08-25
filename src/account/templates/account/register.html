@@ -1,0 +1,39 @@
+{% extends "base.html"%}
+
+<!-- Tähän sivukohtainen profiilin tiedot/kirjautuminen-->
+{% block profile_information %}
+{% endblock %}
+
+<!-- Filtterin paikka -->
+{% block filter %}
+{% endblock %}
+
+<!-- Tähän sivukohtainen sisältö (tervetuloteksti, reseptit jne.)-->
+<!-- Muista käyttää tarvittaessa vasen oikein jaottelua -->
+{% block content%}
+<!-- LOMAKE TÄHÄN -->
+<h2>Rekisteröidy tässä</h2>
+
+<form method="post">
+  {% csrf_token %}
+  {% for field in registration_form %}
+    <small>
+      {{field.label_tag}}
+      {{field}}
+      {% if field.help_text %}
+        <small>{{field.help_text}}</small>
+      {% endif %}
+
+      {% for error in field.errors%}
+        <p>{{error}}</p>
+      {% endfor %}
+    </small>
+  {% endfor %}
+  <button type="submit">Rekisteröidy</button>
+
+</form>
+{% endblock %}
+
+<!-- Sivun oikean puolen fiidi/rekisteröityminen -->
+{% block feed %}
+{% endblock %}

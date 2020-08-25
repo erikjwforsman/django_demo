@@ -1,0 +1,159 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- css -->
+    <link rel="stylesheet" href="{% static 'css/kokeilu.css' %}">
+
+  </head>
+  <body>
+    <div class="sivunasettelu">
+
+      <div class="header">
+        <div class="header_profile">
+          <div class="hleft">
+            <h1>RUOKAKIRJA</h1>
+          </div>
+
+          <div class="hright">
+            {% if user.is_authenticated%}
+            <h3>Hei, {{user.username}}!</h3>
+            {% else %}
+            <div class="korjaus">
+            <form method="post" name="signin">
+              {% csrf_token %}
+              {% for field in login_form %}
+
+                  {{ field.label_tag }}
+                  {{ field }}
+
+                  {% if field.help_text %}
+                    <small>{{field.help_text}}</small>
+                  {% endif %}
+              {% endfor%}
+                {% for field in login_form%}
+                  {% for error in field.errors %}
+                  <p>{{error}}</p>
+                  {% endfor %}
+                {% endfor %}
+
+                {% if login_form.non_field_errors %}
+                <div style="color:red;">
+                  <p>{{login_form.non_field_errors}}</p>
+                </div>
+                {% endif %}
+              <button style="color:black;" type="submit" name="button">Kirjaudu</button>
+            </form>
+          </div>
+            {% endif %}
+          </div>
+
+        </div>
+      </div>
+
+        <div class="content">
+          <!-- SIVUN NAVBAR -->
+          <div class="content_navbar">
+            <nav class="navbar mynav" role="navigation">
+              <div  class="">
+                <a href="{% url 'home' %}" class="navbar-brand mynav" id="d_green">Etusivu</a>
+                <!--Tähän myöhemmin kirjautunut/admin näkymät-->
+                {% if user.is_admin%}
+                <a href="{% url 'admin:index' %}" class="navbar-brand mynav" id="d_green">Admin</a>
+                {% endif %}
+                <ul class="nav navbar-nav navbar-right">
+                  {% if user.is_authenticated %}
+                  <!--<li><a href="#" id="d_green">Lisää resepti</a></li>-->
+                  <li><a href="{% url 'account:user' %}" id="d_green">Tiedot</a></li>
+                  {% endif %}
+                  <li><a href="{% url 'recipe:recipes' %}" id="d_green">Reseptit</a></li>
+
+                  {% if user.is_authenticated %}
+                  <li><a href="{% url 'account:logout' %}" id="d_green">Kirjaudu ulos</a></li>
+                  {% else %}
+                  <!--<li><a href="{% url 'account:register' %}" id="d_green">Rekisteröidy</a></li>-->
+                  <li><a href="{% url 'account:login' %}" id="d_green">Kirjaudu sisään</a></li>
+                  {% endif %}
+                </ul>
+              </div>
+            </nav>
+          </div>
+
+          <!-- Vaihtelee kirjautumisen mukaan, tuodaan basessa -->
+          <div class="content_profile">
+            <div class="left">
+              {% if user.image %}
+              <img class="profpic center" src="{{ user.image.url }}" alt="Kokki" width="225" height="225">
+              {% else %}
+              <img class="profpic center" src="{% static 'images/chef_icon1.png' %}" alt="Kokki" width="225" height="225">
+              {% endif %}
+            </div>
+            <div class="right_t">
+              {% block profile_information %}
+              {% endblock %}
+            </div>
+          </div>
+          <!-- Filter on sivukohtainen, tuodaan tarvittaessa
+          <div class="content_filter">buttons here</div>-->
+          {% block filter %}
+          {% endblock %}
+
+
+          <!-- Contentcard sivukohtainen, tuodaan tarvittaessa-->
+      <!--    <div class="content_card">
+            <div class="left">kuva</div>
+            <div class="right">
+
+            </div>
+          </div>
+        -->
+        {% block content %}
+        {% endblock %}
+      </div>
+
+  <div class="info">
+    {% if not user.is_authenticated%}
+    <h2 style="text-align:left; padding-left: 5%; padding-top:60%;">Rekisteröidy</h2>
+    <form method="post" style="text-align: right; padding-right: 5px">
+      {% csrf_token %}
+      {% for field in registration_form %}
+        <p>
+          {{field.label_tag}}
+          {{field}}
+          <!--
+          {% if field.help_text %}
+            <small>{{field.help_text}}</small>
+          {% endif %}
+        -->
+          {% for error in field.errors%}
+            <small>{{error}}</small>
+          {% endfor %}
+        </p>
+      {% endfor %}
+      <button type="submit">Rekisteröidy</button>
+
+    </form>
+
+    {% else %}
+      <a href="{% url 'recipe:add' %}"><button id="lisaa_resp">Lisää resepti</button></a>
+
+    {% endif %}
+
+    {% block feed %}
+    {% endblock %}
+  </div>
+    <!-- Tutki jos footerin laittaa body ulkopuolelle-->
+  <div class="footer" style="padding-top: 25px; color:black;">Erik Forsman | 2020</div>
+</div>
+
+</body>
+</html>

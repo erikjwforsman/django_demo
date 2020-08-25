@@ -1,0 +1,89 @@
+{% extends "base.html"%}
+
+<!-- Tähän sivukohtainen profiilin tiedot/kirjautuminen-->
+{% block profile_information %}
+  {% if user.is_authenticated %}
+    <h3>Kirjautunut sisälle nimellä</h3>
+    <h2>{{ user.username }}</h2>
+    <h2>{{user.motto}}</h2>
+  {% else %}
+    <h1>Rekisteröidy saadaksesi sivuston kaikki hyöty</h1>
+  {% endif %}
+{% endblock %}
+
+<!-- Filtterin paikka -->
+{% block filter %}
+<div class="content_filter">
+  <div class="filter_text">
+
+    <form method="get" class="filter_text">
+      <a href="{% url 'recipe:recipes' %}"><button style="color:black" type="button" name="button">Kaikki ruuat</button></a>
+      {{myFilter.form}}
+      <button type="submit" name="button">Hae</button>
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+<!-- Tähän sivukohtainen sisältö (tervetuloteksti, reseptit jne.)-->
+
+<!-- Muista käyttää tarvittaessa vasen oikein jaottelua -->
+{% block content%}
+  {% for resepti in resepti_lista %}
+  <a href="{% url 'recipe:single' slug=resepti.slug %}">
+    <div class="content_card">
+      <div class="left" >
+        <img src="{{resepti.image.url}}" alt="Kuva puuttuu" style="border-top-left-radius: 20px; border-bottom-left-radius: 20px;" height="200" width="200">
+      </div>
+      <div class="right">
+        <h2>{{resepti.title}} kokilta {{resepti.author}} </h2>
+        <h3>{{resepti.dish}}</h3>
+        <h3>Keittoaika: {{resepti.cooking_time}} minuuttia</h3>
+        <h3>Ainesosat: {{resepti.ingredients | truncatewords:5}}</h3>
+      </div>
+
+    </div>
+
+  </a>
+  {% endfor %}
+{% endblock %}
+
+<!-- Sivun oikean puolen fiidi/rekisteröityminen -->
+{% block feed %}
+{%if user.is_authenticated%}
+
+  <h3>Uusimmat kommentit</h3>
+  {% for kommentti in kommentti_lista%}
+
+    <a href="{% url 'recipe:single' slug=kommentti.recipe_commented.slug %}">
+      <div id="cc">
+      <h4>{{kommentti.recipe_commented}}</h4>
+      <h5>{{kommentti.text|truncatewords:25}}</h5>
+      <small>{{kommentti.author}}: {{kommentti.create_date}}</small>
+      </div>
+    </a>
+
+  {% endfor %}
+{% else %}
+<h2 style="text-align:left; padding-left: 5%; padding-top:60%;">Rekisteröidy</h2>
+<form method="post" style="text-align: right; padding-right: 5px">
+  {% csrf_token %}
+  {% for field in registration_form %}
+    <p>
+      {{field.label_tag}}
+      {{field}}
+      <!--
+      {% if field.help_text %}
+        <small>{{field.help_text}}</small>
+      {% endif %}
+    -->
+      {% for error in field.errors%}
+        <small>{{error}}</small>
+      {% endfor %}
+    </p>
+  {% endfor %}
+  <button type="submit">Rekisteröidy</button>
+
+</form>
+{% endif %}
+{% endblock %}

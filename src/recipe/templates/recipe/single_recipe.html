@@ -1,0 +1,61 @@
+{% extends "base.html"%}
+
+<!--Tämä on kopioitava pohjamalli. ÄLÄ TÄYDENNÄ TÄHÄN-->
+
+<!-- Tähän sivukohtainen profiilin tiedot/kirjautuminen-->
+{% block profile_information %}
+{%if user == resepti_lista.author%}
+<h2>Resepti: {{ resepti_lista.title }} <a href="{% url 'recipe:edit' slug=resepti_lista.slug %}"><button type="button" name="button">Muokkaa</button></a></h2>
+{% else %}
+<h2>Resepti: {{ resepti_lista.title }}</h2>
+{%endif%}
+<small>Julkaistu: {{ resepti_lista.date_published }} | Päivitetty {{ resepti_lista.date_updated}}</small>
+<a style="color:black" href="{% url 'account:user_pk' pk=resepti_lista.author.pk%}"><h4>Kehittäjä: {{ resepti_lista.author }} <button type="button" name="button">Vieraile profiilissa</button></h4></a>
+<h4>Ruokalaji: {{ resepti_lista.dish }}</h4>
+<h4>Keittoaika: {{ resepti_lista.cooking_time }}min</h4>
+{% endblock %}
+
+<!-- Filtterin paikka -->
+{% block filter %}
+{% endblock %}
+
+<!-- Tähän sivukohtainen sisältö (tervetuloteksti, reseptit jne.)-->
+<!-- Muista käyttää tarvittaessa vasen oikein jaottelua -->
+{% block content%}
+<div class="food_wrapper">
+  <div class="fw_left">
+    <img class="imag" src="{{ resepti_lista.image.url }}" alt="Kuva puuttuu" width="500" height="auto">
+  </div>
+  <div class="fw_right">
+    <h2>Ainesosat:</h2>
+    <h3>{{ resepti_lista.ingredients }}</h3>
+    <h3>Ohje:</h3>
+    <h4>{{ resepti_lista.body|linebreaks}}</h4>
+  </div>
+</div>
+{% endblock %}
+
+<!-- Sivun oikean puolen fiidi/rekisteröityminen -->
+{% block feed %}
+
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  {% if not user.is_authenticated %}
+    <h4>Kommentoija: {{form.author}}</h4>
+  {% else %}
+    <p style="visibility:hidden;">{{form.author}}</p>
+  {%endif%}
+  <h4>Kommentoi:</h4>
+  {{form.text}}
+  <button type="submit" name="button">Kommentoi</button>
+</form>
+  {%for kommentti in kommentti_lista %}
+  <div id="cc">
+    <h4>{{kommentti.author}} kommentoi:</h4>
+    <h4>{{kommentti.text}}</h4>
+    <small>{{kommentti.create_date}}</small>
+  </div>
+
+  {% endfor %}
+
+{% endblock %}
